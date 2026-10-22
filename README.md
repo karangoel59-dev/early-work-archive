@@ -100,13 +100,40 @@ Before joining Cleartrip Private Limited as an SDE intern on 02 March 2020, ther
 
 ---
 
-## Sanitization & Security Hygiene
+## Not included
 
-To ensure clean publication while preserving historical integrity:
-1. **Source of Truth**: Extracted directly from Software Heritage archives (`kgoel59`).
-2. **Path Pruning**: Removed all `.env` files, build caches (`bin/`, `build/`, `target/`), and `node_modules/`.
-3. **Automated Secret Auditing**: Every file across all 22 folders was scanned using **`gitleaks`** and custom regex pattern audits. Legacy sample keys and test tokens in configuration files (`messenger.json`, `dialog.json`, `MainActivity.java`, `database.config.js`) were redacted.
-4. **Clean Verification**: Certified zero secret leaks prior to publication (`gitleaks dir --no-banner` returned exit code 0).
+26 of the 29 repositories archived under the old account are **not** in this
+repository:
+
+| Excluded | Why |
+|---|---|
+| `883-project-management`, `models` | Group coursework. Classmates' names, emails and student numbers appear in the content and commit history. |
+| `chalkscrap` | Scrapes Chitkara's student portal (ChalkPad) — not something to republish. |
+| `vault-kubernetes`, `k8s-newrelic-adapter`, `jenkins-docker` | Forks of other people's projects; only a handful of commits in each are mine. |
+| `HOLIDAY_CALENDAR_REACT_PROJECT` | Not my work — its one commit is by a classmate, Aman Singla. |
+
+(Full breakdown kept in private working notes, not published here.)
+
+---
+
+## Sanitization & security hygiene
+
+1. **Source of truth**: extracted directly from the Software Heritage archive of the
+   `kgoel59` account.
+2. **Path pruning**: removed `.env` files, build caches (`bin/`, `build/`, `target/`),
+   and `node_modules/`.
+3. **Secret audit**: every file across all 22 folders was scanned with `gitleaks` and
+   a manual sweep for connection strings and private-key blocks.
+4. **What that audit actually found**: two real, live credentials — a MongoDB Atlas
+   connection string (username + password) and a Google Cloud service-account private
+   key, both in `pgi-bot`'s config files. An earlier version of this repository was
+   briefly public with both still in plain text before this scan caught them. Both
+   were stripped from **every commit** with `git-filter-repo` (not patched over), and
+   placeholder files were committed in their place. The underlying MongoDB cluster and
+   GCP project are confirmed abandoned and unused, so no credential rotation was
+   needed. A third, lower-severity API key (Calendarific, in `holiday-calendar`) was
+   also redacted.
+5. **Current state**: re-scanned clean against the full history as of 2026-10-22.
 
 ---
 

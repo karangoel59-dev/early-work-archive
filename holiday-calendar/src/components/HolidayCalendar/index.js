@@ -29,7 +29,7 @@ class HolidayCalendar extends Component {
     }
 
     getListOfHolidays =async  () => {
-        // const response = await fetch(`https://calendarific.com/api/v2/holidays?api_key=573cb407e77ed898288ec37357cd3e58ea559d14&country=IN&year=2019`);
+        // const response = await fetch(`https://calendarific.com/api/v2/holidays?api_key=REDACTED&country=IN&year=2019`);
         // const myJson = await response.json();
         this.setState({
           listOfHolidays: data.response.holidays

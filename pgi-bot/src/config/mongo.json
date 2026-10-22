@@ -1,0 +1,5 @@
+{
+    "db_conn": "REDACTED — original held a live MongoDB Atlas connection string with credentials",
+    "db_user": "REDACTED",
+    "db_pass": "REDACTED"
+}
